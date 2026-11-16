@@ -100,6 +100,10 @@ def cmd_fontid(args):
                         fonts = []
                     fonts.append(got)
 
+    if fonts is None:
+        # include the families this run downloaded, so the reported winner
+        # can point at a file that is actually on disk
+        fonts = FID.find_local_fonts(args.project_dir or ())
     res = FID.identify(im, glyphs, fonts=fonts, sizes=sizes,
                         thr=args.thresh, search=args.search,
                         project_dirs=args.project_dir or ())

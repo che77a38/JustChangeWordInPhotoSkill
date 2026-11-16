@@ -160,14 +160,18 @@ def find_system_fonts(names=None):
 def find_local_fonts(extra_dirs=()):
     """Locate open-source CJK fonts shipped in the working project.
 
-    The search covers the current working directory, every extra directory
-    given on the command line, AND the directory the skill itself lives in
-    (one level above `scripts/`), so a font dropped next to SKILL.md is found
-    without any extra flag.
+    Searched, in order:
+      1. the current working directory
+      2. `scripts/fonts/` - where `photoswap.py fontid` caches the families it
+         downloads
+      3. the skill root (one level above `scripts/`) - a font dropped next to
+         SKILL.md is found without any extra flag
+      4. every extra directory given on the command line
     """
     here = os.path.dirname(os.path.abspath(__file__))
     skill_root = os.path.dirname(here)
-    dirs = [os.getcwd(), skill_root] + list(extra_dirs)
+    dirs = [os.getcwd(), os.path.join(here, "fonts"), skill_root]
+    dirs += list(extra_dirs)
     out = []
     for n in LOCAL_FONT_HINTS:
         for d in dirs:
