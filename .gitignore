@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+# Fonts fetched at runtime by `photoswap.py fontid`
+scripts/fonts/
+
+# Scratch output
+out/
+*.log
